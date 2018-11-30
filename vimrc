@@ -1,13 +1,25 @@
 call plug#begin()
 
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Shougo/deoplete.nvim'
-Plug 'scrooloose/nerdtree'
-Plug 'neomake/neomake'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'pangloss/vim-javascript'
-Plug 'prettier/vim-prettier'
-Plug 'ternjs/tern_for_vim'
+Plug 'ctrlpvim/ctrlp.vim'             " use ctrl p to open files
+Plug 'Shougo/deoplete.nvim'           " automatic autocomplete 
+Plug 'scrooloose/nerdtree'            " looking at files in folders / trees
+Plug 'Xuyuanp/nerdtree-git-plugin'    " show git status in nerdtree
+Plug 'neomake/neomake'                " automatic make / lint 
+Plug 'editorconfig/editorconfig-vim'  " use the project editor settings
+Plug 'pangloss/vim-javascript'        " support for javascript 
+Plug 'prettier/vim-prettier'          " use the project prettier settings
+Plug 'ternjs/tern_for_vim'            " go to defintion etc
+Plug 'b4b4r07/vim-sqlfmt'             " format sql
+Plug 'Yggdroot/indentLine'            " show indents
+Plug 'godlygeek/tabular'              " tab things up
+Plug 'chr4/nginx.vim'                 " nginx highlighting
+Plug 'ntpeters/vim-better-whitespace' " show whitspace / clear whitespace
+Plug 'tpope/vim-endwise'              " end control structures
+Plug 'tpope/vim-fugitive'             " git plugin
+Plug 'tpope/vim-git'
+Plug 'airblade/vim-gitgutter'         " show git gutter
+Plug 'elzr/vim-json'                  " vim syntax
+
 
 "ctrlp/          deoplete/       syntastic/      vim-json/       
 " delimitMate/    neomake/        vim-javascript/ 
@@ -27,6 +39,9 @@ call plug#end()
 function! MyOnBattery()
   return readfile('/sys/class/power_supply/AC/online') == ['0']
 endfunction
+
+" don't conceal " in json
+let g:vim_json_syntax_conceal = 0
 
 " Prettier 
 let g:prettier#autoformat = 0
@@ -239,3 +254,7 @@ endif
 " open the list automatically
 let g:neomake_open_list = 2
 let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
+
+" sqlfmt
+let g:sqlfmt_command = "sqlformat"
+let g:sqlfmt_options = "-r -k upper"
