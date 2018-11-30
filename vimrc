@@ -12,6 +12,7 @@ Plug 'ternjs/tern_for_vim'            " go to defintion etc
 Plug 'b4b4r07/vim-sqlfmt'             " format sql
 Plug 'Yggdroot/indentLine'            " show indents
 Plug 'godlygeek/tabular'              " tab things up
+Plug 'plasticboy/vim-markdown'        " markdown, depends on tabular
 Plug 'chr4/nginx.vim'                 " nginx highlighting
 Plug 'ntpeters/vim-better-whitespace' " show whitspace / clear whitespace
 Plug 'tpope/vim-endwise'              " end control structures
@@ -19,6 +20,10 @@ Plug 'tpope/vim-fugitive'             " git plugin
 Plug 'tpope/vim-git'
 Plug 'airblade/vim-gitgutter'         " show git gutter
 Plug 'elzr/vim-json'                  " vim syntax
+Plug 'terryma/vim-multiple-cursors'   " multiple cursors for multine line select etc
+Plug 'mhinz/vim-sayonara'             " keep stuff nice
+Plug 'stephpy/vim-yaml'               " faster yaml 
+Plug 'Raimondi/delimitMate'           " match '{[ etc 
 
 
 "ctrlp/          deoplete/       syntastic/      vim-json/       
@@ -42,6 +47,9 @@ endfunction
 
 " don't conceal " in json
 let g:vim_json_syntax_conceal = 0
+
+" sayonara ? 
+nnoremap <silent> <leader>q :Sayonara<CR>
 
 " Prettier 
 let g:prettier#autoformat = 0
