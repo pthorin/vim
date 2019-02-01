@@ -24,7 +24,8 @@ Plug 'terryma/vim-multiple-cursors'   " multiple cursors for multine line select
 Plug 'mhinz/vim-sayonara'             " keep stuff nice
 Plug 'stephpy/vim-yaml'               " faster yaml 
 Plug 'Raimondi/delimitMate'           " match '{[ etc 
-
+Plug 'OmniSharp/omnisharp-vim'
+Plug 'derekwyatt/vim-scala'
 
 "ctrlp/          deoplete/       syntastic/      vim-json/       
 " delimitMate/    neomake/        vim-javascript/ 
@@ -45,6 +46,57 @@ function! MyOnBattery()
   return readfile('/sys/class/power_supply/AC/online') == ['0']
 endfunction
 
+" omnisharp
+augroup omnisharp_commands
+    autocmd!
+
+    " When Syntastic is available but not ALE, automatic syntax check on events
+    " (TextChanged requires Vim 7.4)
+    " autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+
+    " Show type information automatically when the cursor stops moving
+    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
+
+    " The following commands are contextual, based on the cursor position.
+    autocmd FileType cs nnoremap <buffer> gd :OmniSharpGotoDefinition<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fi :OmniSharpFindImplementations<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fs :OmniSharpFindSymbol<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>fu :OmniSharpFindUsages<CR>
+
+    " Finds members in the current buffer
+    autocmd FileType cs nnoremap <buffer> <Leader>fm :OmniSharpFindMembers<CR>
+
+    autocmd FileType cs nnoremap <buffer> <Leader>fx :OmniSharpFixUsings<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>tt :OmniSharpTypeLookup<CR>
+    autocmd FileType cs nnoremap <buffer> <Leader>dc :OmniSharpDocumentation<CR>
+    autocmd FileType cs nnoremap <buffer> <C-\> :OmniSharpSignatureHelp<CR>
+    autocmd FileType cs inoremap <buffer> <C-\> <C-o>:OmniSharpSignatureHelp<CR>
+
+
+    " Navigate up and down by method/property/field
+    autocmd FileType cs nnoremap <buffer> <C-k> :OmniSharpNavigateUp<CR>
+    autocmd FileType cs nnoremap <buffer> <C-j> :OmniSharpNavigateDown<CR>
+  augroup END
+" Contextual code actions (uses fzf, CtrlP or unite.vim when available)
+nnoremap <Leader><Space> :OmniSharpGetCodeActions<CR>
+" Run code actions with text selected in visual mode to extract method
+xnoremap <Leader><Space> :call OmniSharp#GetCodeActions('visual')<CR>
+
+" Rename with dialog
+nnoremap <Leader>nm :OmniSharpRename<CR>
+nnoremap <F2> :OmniSharpRename<CR>
+" Rename without dialog - with cursor on the symbol to rename: `:Rename newname`
+command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
+
+nnoremap <Leader>cf :OmniSharpCodeFormat<CR>
+
+" Start the omnisharp server for the current solution
+nnoremap <Leader>ss :OmniSharpStartServer<CR>
+nnoremap <Leader>sp :OmniSharpStopServer<CR>
+
+" Add syntax highlighting for types and interfaces
+nnoremap <Leader>th :OmniSharpHighlightTypes<CR>
+  
 " don't conceal " in json
 let g:vim_json_syntax_conceal = 0
 
@@ -56,9 +108,9 @@ let g:prettier#autoformat = 0
 let g:prettier#quickfix_enabled = 0
 
 if MyOnBattery() 
-  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml PrettierAsync
+  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
 else 
-  autocmd BufWritePre,TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml PrettierAsync
+  autocmd BufWritePre,TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
 endif
 let mapleader  = ","
 map <leader>p :PrettierAsync<CR>
@@ -73,11 +125,13 @@ set noswapfile
 set nobackup
 set nowritebackup
 set splitright
+set splitbelow
 set encoding=utf-8
 set autoread
 
 set ic hls is smartcase
-set tabstop=2 
+set tabstop=2
+set softtabstop=2
 set shiftwidth=2
 set expandtab
 set autoindent
@@ -129,7 +183,7 @@ endif
 
 au BufNewFile,BufRead *.vim setlocal et ts=2 sw=2 sts=2
 au BufNewFile,BufRead *.txt setlocal noet ts=4 sw=4
-au BufNewFile,BufRead *.md setlocal spell et ts=2 sw=2
+au BufNewFile,BufRead *.md setlocal spell et ts=2 sw=2 foldenable! foldmethod=manual
 au BufNewFile,BufRead *.yml,*.yaml setlocal expandtab ts=2 sw=2
 au BufNewFile,BufRead *.cpp setlocal expandtab ts=2 sw=2
 au BufNewFile,BufRead *.hpp setlocal expandtab ts=2 sw=2
@@ -218,6 +272,10 @@ let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
 " ==================== vim-json ====================
 
 let g:vim_json_syntax_conceal = 0
+
+" ==================== vim-markdown ====================
+
+let g:vim_markdown_conceal = 0
 
 " ==================== Completion =========================
 " use deoplete for Neovim.
