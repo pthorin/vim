@@ -12,7 +12,7 @@ Plug 'ternjs/tern_for_vim'            " go to defintion etc
 Plug 'b4b4r07/vim-sqlfmt'             " format sql
 Plug 'Yggdroot/indentLine'            " show indents
 Plug 'godlygeek/tabular'              " tab things up
-Plug 'plasticboy/vim-markdown'        " markdown, depends on tabular
+Plug 'gabrielelana/vim-markdown'        " markdown, depends on tabular
 Plug 'chr4/nginx.vim'                 " nginx highlighting
 Plug 'ntpeters/vim-better-whitespace' " show whitspace / clear whitespace
 Plug 'tpope/vim-endwise'              " end control structures
@@ -276,6 +276,17 @@ let g:vim_json_syntax_conceal = 0
 " ==================== vim-markdown ====================
 
 let g:vim_markdown_conceal = 0
+
+" ==================== tabular  ===========================
+
+if exists(":Tabularize")
+  nmap <leader>a= :Tabularize /=<CR>
+  vmap <leader>a= :Tabularize /=<CR>
+  nmap <leader>a: :Tabularize /:\zs<CR>
+  vmap <leader>a: :Tabularize /:\zs<CR>
+  nmap <leader>a\| :Tabularize /\|<CR>
+  vmap <leader>a\| :Tabularize /\|<CR>
+endif
 
 " ==================== Completion =========================
 " use deoplete for Neovim.
