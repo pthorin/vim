@@ -43,7 +43,7 @@ Plug 'derekwyatt/vim-scala'
 call plug#end()
 " function to check if running on battery
 function! MyOnBattery()
-  return readfile('/sys/class/power_supply/AC/online') == ['0']
+  return ['1'] == ['0']
 endfunction
 
 " omnisharp
@@ -136,7 +136,7 @@ set shiftwidth=2
 set expandtab
 set autoindent
 
-colorscheme monokai
+colorscheme peachpuff
 
 set ruler
 
