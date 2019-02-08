@@ -26,6 +26,8 @@ Plug 'stephpy/vim-yaml'               " faster yaml
 Plug 'Raimondi/delimitMate'           " match '{[ etc 
 Plug 'OmniSharp/omnisharp-vim'
 Plug 'derekwyatt/vim-scala'
+" colorschemes
+Plug 'flazz/vim-colorschemes'
 
 "ctrlp/          deoplete/       syntastic/      vim-json/       
 " delimitMate/    neomake/        vim-javascript/ 
@@ -136,7 +138,8 @@ set shiftwidth=2
 set expandtab
 set autoindent
 
-colorscheme peachpuff
+colorscheme PaperColor
+set background=dark
 
 set ruler
 
