@@ -1,7 +1,15 @@
 call plug#begin()
 
 Plug 'ctrlpvim/ctrlp.vim'             " use ctrl p to open files
-Plug 'Shougo/deoplete.nvim'           " automatic autocomplete 
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+"Plug 'Shougo/deoplete.nvim'           " automatic autocomplete 
 Plug 'scrooloose/nerdtree'            " looking at files in folders / trees
 Plug 'Xuyuanp/nerdtree-git-plugin'    " show git status in nerdtree
 Plug 'neomake/neomake'                " automatic make / lint 
@@ -24,7 +32,7 @@ Plug 'terryma/vim-multiple-cursors'   " multiple cursors for multine line select
 Plug 'mhinz/vim-sayonara'             " keep stuff nice
 Plug 'stephpy/vim-yaml'               " faster yaml 
 Plug 'Raimondi/delimitMate'           " match '{[ etc 
-Plug 'OmniSharp/omnisharp-vim'
+"Plug 'OmniSharp/omnisharp-vim'
 Plug 'derekwyatt/vim-scala'
 " colorschemes
 Plug 'flazz/vim-colorschemes'
@@ -293,7 +301,7 @@ endif
 
 " ==================== Completion =========================
 " use deoplete for Neovim.
-if has('nvim')
+"if has('nvim')
   let g:deoplete#enable_at_startup = 1
 
 	" Use smartcase.
@@ -322,7 +330,7 @@ if has('nvim')
 "  call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
 "  call deoplete#custom#source('_', 'converters', ['converter_remove_paren'])
 "  call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-endif
+" endif
 
 " neomake
 if MyOnBattery()
