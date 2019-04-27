@@ -9,12 +9,12 @@ else
   Plug 'roxma/vim-hug-neovim-rpc'
 endif
 
-"Plug 'Shougo/deoplete.nvim'           " automatic autocomplete 
+"Plug 'Shougo/deoplete.nvim'           " automatic autocomplete
 Plug 'scrooloose/nerdtree'            " looking at files in folders / trees
 Plug 'Xuyuanp/nerdtree-git-plugin'    " show git status in nerdtree
-Plug 'neomake/neomake'                " automatic make / lint 
+Plug 'neomake/neomake'                " automatic make / lint
 Plug 'editorconfig/editorconfig-vim'  " use the project editor settings
-Plug 'pangloss/vim-javascript'        " support for javascript 
+Plug 'pangloss/vim-javascript'        " support for javascript
 Plug 'prettier/vim-prettier'          " use the project prettier settings
 Plug 'ternjs/tern_for_vim'            " go to defintion etc
 Plug 'b4b4r07/vim-sqlfmt'             " format sql
@@ -30,25 +30,15 @@ Plug 'airblade/vim-gitgutter'         " show git gutter
 Plug 'elzr/vim-json'                  " vim syntax
 Plug 'terryma/vim-multiple-cursors'   " multiple cursors for multine line select etc
 Plug 'mhinz/vim-sayonara'             " keep stuff nice
-Plug 'stephpy/vim-yaml'               " faster yaml 
-Plug 'Raimondi/delimitMate'           " match '{[ etc 
+Plug 'stephpy/vim-yaml'               " faster yaml
+Plug 'Raimondi/delimitMate'           " match '{[ etc
 "Plug 'OmniSharp/omnisharp-vim'
 Plug 'derekwyatt/vim-scala'
+Plug 'eed3si9n/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 " colorschemes
 Plug 'flazz/vim-colorschemes'
-
-"ctrlp/          deoplete/       syntastic/      vim-json/       
-" delimitMate/    neomake/        vim-javascript/ 
-"
-" ctrlp.vim         neomake               vim-eunuch      vim-localvimrc        vim-tmux-navigator
-" editorconfig-vim  syntastic             vim-format-js   vim-log-syntax        vim-unimpaired
-" emmet-vim         tabular               vim-fugitive    vim-markdown-folding  vim-vinegar
-" gitignore         typescript-vim        vim-hdevtools   vim-scala
-" gtags.vim         vim-coffee-script     vim-indentwise  vim-signify
-" javacomplete      vim-colors-solarized  vim-javascript  vim-skip
-" lightline.vim     vim-css-color         vim-less        vim-surround
-
-
+" fish
+Plug 'dag/vim-fish'
 
 call plug#end()
 " function to check if running on battery
@@ -106,24 +96,42 @@ nnoremap <Leader>sp :OmniSharpStopServer<CR>
 
 " Add syntax highlighting for types and interfaces
 nnoremap <Leader>th :OmniSharpHighlightTypes<CR>
-  
+
 " don't conceal " in json
 let g:vim_json_syntax_conceal = 0
 
-" sayonara ? 
+" sayonara ?
 nnoremap <silent> <leader>q :Sayonara<CR>
 
-" Prettier 
+" Prettier
 let g:prettier#autoformat = 0
 let g:prettier#quickfix_enabled = 0
 
-if MyOnBattery() 
+if MyOnBattery()
   autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
-else 
+else
   autocmd BufWritePre,TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
 endif
+
 let mapleader  = ","
 map <leader>p :PrettierAsync<CR>
+
+" Language Server
+" scala
+set signcolumn=yes
+
+let g:LanguageClient_autoStart = 1
+
+let g:LanguageClient_serverCommands = {
+    \ 'scala': ['node', expand('~/scripts/sbt-server-stdio.js')]
+    \ }
+
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+
+" Go to tag (defintion)
+nmap <silent> <C-b> <C-]>
 
 
 set noerrorbells
@@ -255,10 +263,10 @@ let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standar
 "   CtrlPBufTag
 " endfunc
 " command! MyCtrlPTag call MyCtrlPTag()
-" 
+"
 " nmap <C-g> :MyCtrlPTag<cr>
 " imap <C-g> <esc>:MyCtrlPTag<cr>
-" 
+"
 " nmap <C-b> :CtrlPCurWD<cr>
 " imap <C-b> <esc>:CtrlPCurWD<cr>
 
@@ -310,15 +318,15 @@ endif
 	inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 	inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
 
-  
+
 
   autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-  " tab or complete 
+  " tab or complete
   inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>" " deoplete tab-complete
 
-  
+
   " <CR>: accept complete
-  " map <CR> pumvisible() ? "\<c-n><c-y> " : "\<CR>" 
+  " map <CR> pumvisible() ? "\<c-n><c-y> " : "\<CR>"
 
 "  let g:deoplete#ignore_sources = {}
 "  let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
@@ -333,15 +341,24 @@ endif
 " endif
 
 " neomake
-if MyOnBattery()
-  call neomake#configure#automake('w')
-else
-  call neomake#configure#automake('nw', 1000)
-endif
+call neomake#configure#automake('nw', 1000)
 
 " open the list automatically
 let g:neomake_open_list = 2
 let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
+let g:neomake_sbt_maker = {
+      \ 'exe': 'sbt',
+      \ 'args': ['-Dsbt.log.noformat=true', 'compile'],
+      \ 'append_file': 0,
+      \ 'auto_enabled': 1,
+      \ 'output_stream': 'stdout',
+      \ 'errorformat':
+          \ '%E[%trror]\ %f:%l:\ %m,' .
+            \ '%-Z[error]\ %p^,' .
+            \ '%-C%.%#,' .
+            \ '%-G%.%#'
+     \ }
+au BufWritePost *.scala Neomake! sbt
 
 " sqlfmt
 let g:sqlfmt_command = "sqlformat"
