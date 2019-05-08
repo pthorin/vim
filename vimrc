@@ -1,5 +1,7 @@
 call plug#begin()
 
+Plug 'mileszs/ack.vim'
+Plug 'lokikl/vim-ctrlp-ag'
 Plug 'ctrlpvim/ctrlp.vim'             " use ctrl p to open files
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
@@ -101,7 +103,7 @@ nnoremap <Leader>th :OmniSharpHighlightTypes<CR>
 let g:vim_json_syntax_conceal = 0
 
 " sayonara ?
-nnoremap <silent> <leader>q :Sayonara<CR>
+nnoremap <leader>q :Sayonara<CR>
 
 " Prettier
 let g:prettier#autoformat = 0
@@ -242,18 +244,39 @@ set wildignore+=*.pyc                            " Python byte code
 set wildignore+=*.orig                           " Merge resolution files
 
 " ==================== CtrlP ====================
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+  let g:ctrlp_use_caching = 0
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  nnoremap K :Ack! "\b<C-R><C-W>\b"<CR>:cw<CR>
+
+  """
+  nnoremap <c-f> :CtrlPag<cr>
+  vnoremap <c-f> :CtrlPagVisual<cr>
+  nnoremap <leader>ca :CtrlPagLocate
+  nnoremap <leader>cp :CtrlPagPrevious<cr>
+  let g:ctrlp_ag_ignores = '--ignore .git
+        \ --ignore "deps/*"
+        \ --ignore "_build/*"
+        \ --ignore "node_modules/*"'
+  " By default ag will search from PWD
+  " But you may enable one of below line to use an arbitrary directory or,
+  " Using the magic word 'current-file-dir' to use current file base directory
+  let g:ctrlp_ag_search_base = 'current-file-dir'
+  " let g:ctrlp_ag_search_base = 'app/controllers' " both relative and absolute path supported
+endif
+
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_height = 10		" maxiumum height of match window
 let g:ctrlp_switch_buffer = 'et'	" jump to a file if it's open already
 let g:ctrlp_mruf_max=450 		" number of recently opened files
 let g:ctrlp_max_files=0  		" do not limit the number of searchable files
-let g:ctrlp_use_caching = 1
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 
 " ignore files in .gitignore
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 " func! MyCtrlPTag()
 "   let g:ctrlp_prompt_mappings = {
