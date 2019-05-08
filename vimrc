@@ -34,6 +34,7 @@ Plug 'terryma/vim-multiple-cursors'   " multiple cursors for multine line select
 Plug 'mhinz/vim-sayonara'             " keep stuff nice
 Plug 'stephpy/vim-yaml'               " faster yaml
 Plug 'Raimondi/delimitMate'           " match '{[ etc
+Plug 'janko-m/vim-test'               " run tests
 "Plug 'OmniSharp/omnisharp-vim'
 Plug 'derekwyatt/vim-scala'
 Plug 'eed3si9n/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
@@ -386,3 +387,11 @@ au BufWritePost *.scala Neomake! sbt
 " sqlfmt
 let g:sqlfmt_command = "sqlformat"
 let g:sqlfmt_options = "-r -k upper"
+
+" tests
+" these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
+nmap <silent> t<C-n> :TestNearest<CR>
+nmap <silent> t<C-f> :TestFile<CR>
+nmap <silent> t<C-s> :TestSuite<CR>
+nmap <silent> t<C-l> :TestLast<CR>
+nmap <silent> t<C-g> :TestVisit<CR>
