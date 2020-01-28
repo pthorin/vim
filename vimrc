@@ -3,15 +3,14 @@ call plug#begin()
 Plug 'mileszs/ack.vim'
 Plug 'lokikl/vim-ctrlp-ag'
 Plug 'ctrlpvim/ctrlp.vim'             " use ctrl p to open files
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+"if has('nvim')
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
+"else
+"  Plug 'Shougo/deoplete.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+"endif
 
-"Plug 'Shougo/deoplete.nvim'           " automatic autocomplete
 Plug 'scrooloose/nerdtree'            " looking at files in folders / trees
 Plug 'Xuyuanp/nerdtree-git-plugin'    " show git status in nerdtree
 Plug 'neomake/neomake'                " automatic make / lint
@@ -28,77 +27,48 @@ Plug 'ntpeters/vim-better-whitespace' " show whitspace / clear whitespace
 Plug 'tpope/vim-endwise'              " end control structures
 Plug 'tpope/vim-fugitive'             " git plugin
 Plug 'tpope/vim-git'
+Plug 'junegunn/gv.vim'                " git Graph
+Plug 'AGhost-7/critiq.vim'            " PR viewer
 Plug 'airblade/vim-gitgutter'         " show git gutter
+Plug 'whiteinge/diffconflicts'        " better git diff conflicts
 Plug 'elzr/vim-json'                  " vim syntax
 Plug 'terryma/vim-multiple-cursors'   " multiple cursors for multine line select etc
 Plug 'mhinz/vim-sayonara'             " keep stuff nice
 Plug 'stephpy/vim-yaml'               " faster yaml
 Plug 'Raimondi/delimitMate'           " match '{[ etc
-Plug 'janko-m/vim-test'               " run tests
-"Plug 'OmniSharp/omnisharp-vim'
+Plug 'janko/vim-test'               " run tests
 Plug 'derekwyatt/vim-scala'
-Plug 'eed3si9n/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'eed3si9n/LanguageClient-neovim'
+Plug 'Chiel92/vim-autoformat'         " automatically format code
+Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completer, support for language server
+Plug 'ryanoasis/vim-devicons' 				" icon support for different plugins using patched nerd font
+Plug 'vim-airline/vim-airline'        " Airline
+Plug 'vim-airline/vim-airline-themes' " and theme
+Plug 'chrisbra/csv.vim'               " csv filetype plugin
+Plug 'alvan/vim-closetag'             " html close tags
+Plug 'mattn/emmet-vim'                " enclose in tags
+
 " colorschemes
 Plug 'flazz/vim-colorschemes'
-" fish
-Plug 'dag/vim-fish'
-
+Plug 'pthorin/cosme.vim'
 call plug#end()
+
+" set the leader straight away
+let mapleader  = ","
 " function to check if running on battery
 function! MyOnBattery()
   return ['1'] == ['0']
 endfunction
 
-" omnisharp
-augroup omnisharp_commands
-    autocmd!
+" autoformat
+noremap <F5> :Autoformat<CR>
+"" scalafmt
+let g:formatdef_scalafmt = "'scalafmt --stdin'"
+let g:formatters_scala = ['scalafmt']
 
-    " When Syntastic is available but not ALE, automatic syntax check on events
-    " (TextChanged requires Vim 7.4)
-    " autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
-
-    " Show type information automatically when the cursor stops moving
-    autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
-
-    " The following commands are contextual, based on the cursor position.
-    autocmd FileType cs nnoremap <buffer> gd :OmniSharpGotoDefinition<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>fi :OmniSharpFindImplementations<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>fs :OmniSharpFindSymbol<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>fu :OmniSharpFindUsages<CR>
-
-    " Finds members in the current buffer
-    autocmd FileType cs nnoremap <buffer> <Leader>fm :OmniSharpFindMembers<CR>
-
-    autocmd FileType cs nnoremap <buffer> <Leader>fx :OmniSharpFixUsings<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>tt :OmniSharpTypeLookup<CR>
-    autocmd FileType cs nnoremap <buffer> <Leader>dc :OmniSharpDocumentation<CR>
-    autocmd FileType cs nnoremap <buffer> <C-\> :OmniSharpSignatureHelp<CR>
-    autocmd FileType cs inoremap <buffer> <C-\> <C-o>:OmniSharpSignatureHelp<CR>
-
-
-    " Navigate up and down by method/property/field
-    autocmd FileType cs nnoremap <buffer> <C-k> :OmniSharpNavigateUp<CR>
-    autocmd FileType cs nnoremap <buffer> <C-j> :OmniSharpNavigateDown<CR>
-  augroup END
-" Contextual code actions (uses fzf, CtrlP or unite.vim when available)
-nnoremap <Leader><Space> :OmniSharpGetCodeActions<CR>
-" Run code actions with text selected in visual mode to extract method
-xnoremap <Leader><Space> :call OmniSharp#GetCodeActions('visual')<CR>
-
-" Rename with dialog
-nnoremap <Leader>nm :OmniSharpRename<CR>
-nnoremap <F2> :OmniSharpRename<CR>
-" Rename without dialog - with cursor on the symbol to rename: `:Rename newname`
-command! -nargs=1 Rename :call OmniSharp#RenameTo("<args>")
-
-nnoremap <Leader>cf :OmniSharpCodeFormat<CR>
-
-" Start the omnisharp server for the current solution
-nnoremap <Leader>ss :OmniSharpStartServer<CR>
-nnoremap <Leader>sp :OmniSharpStopServer<CR>
-
-" Add syntax highlighting for types and interfaces
-nnoremap <Leader>th :OmniSharpHighlightTypes<CR>
+" powerline symbols
+let g:airline_powerline_fonts = 1
+let g:airline_theme='biogoo'
 
 " don't conceal " in json
 let g:vim_json_syntax_conceal = 0
@@ -110,28 +80,27 @@ nnoremap <leader>q :Sayonara<CR>
 let g:prettier#autoformat = 0
 let g:prettier#quickfix_enabled = 0
 
-if MyOnBattery()
-  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
-else
-  autocmd BufWritePre,TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
-endif
+"if MyOnBattery()
+"  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
+"else
+"  autocmd BufWritePre,TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
+"endif
 
-let mapleader  = ","
-map <leader>p :PrettierAsync<CR>
+map <leader>p :w<cr>:Prettier<CR>:w<CR>:!eslint --fix %<cr>:cwindow<cr>:redraw!<cr>
 
-" Language Server
-" scala
-set signcolumn=yes
-
-let g:LanguageClient_autoStart = 1
-
-let g:LanguageClient_serverCommands = {
-    \ 'scala': ['node', expand('~/scripts/sbt-server-stdio.js')]
-    \ }
-
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+" GitGutter
+nnoremap <leader>gn :GitGutterNextHunk<cr> " go to next hunk
+nnoremap <leader>gp :GitGutterPrevHunk<cr> " go to prev hunk
+" lcl ccl (close lists)
+nnoremap <leader>lcl :lcl<cr> " close location list
+nnoremap <leader>ccl :ccl<cr> " close c list whatever it's called
+nnoremap <leader>cc :cc<cr>   " display last error
+nnoremap <leader>ll :ll<cr>   " display last error
+nnoremap <leader>cl :CtrlPQuickfix<cr>   " display quickfixlist
+nnoremap <leader>cn :cn<cr>
+nnoremap <leader>ln :ln<cr>
+nnoremap <leader>co :cope<cr>
+nnoremap <leader>lo :lope<cr>
 
 " Go to tag (defintion)
 nmap <silent> <C-b> <C-]>
@@ -156,8 +125,12 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 set autoindent
+set laststatus=2
+set splitright
+set splitbelow
+set undofile
 
-colorscheme PaperColor
+
 set background=dark
 
 set ruler
@@ -172,6 +145,8 @@ set re=1
 " open help vertically
 command! -nargs=* -complete=help Help vertical belowright help <args>
 autocmd FileType help wincmd L
+" Set tabstop etc for java
+autocmd FileType java setlocal ts=4 sw=4 sts=4
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -186,7 +161,7 @@ au BufRead /tmp/mutt-* set tw=72
 
 
 " center the screen
-nnoremap <space> zz
+"nnoremap <space> zz
 " center on next
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -214,13 +189,12 @@ au BufNewFile,BufRead *.js setlocal expandtab ts=2 sw=2
 
 " diff current file with original file
 if !exists(":DiffOrig")
-	command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-				\ | wincmd p | diffthis
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+        \ | wincmd p | diffthis
 endif
 
 " Quickfix shortcuts
 map <C-n> :cn<CR>
-map <C-p> :cp<CR>
 
 " Finding files
 set path+=**
@@ -259,7 +233,8 @@ if executable('ag')
   let g:ctrlp_ag_ignores = '--ignore .git
         \ --ignore "deps/*"
         \ --ignore "_build/*"
-        \ --ignore "node_modules/*"'
+        \ --ignore "node_modules/*"
+        \ --ignore "tags"'
   " By default ag will search from PWD
   " But you may enable one of below line to use an arbitrary directory or,
   " Using the magic word 'current-file-dir' to use current file base directory
@@ -269,30 +244,16 @@ endif
 
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
-let g:ctrlp_max_height = 10		" maxiumum height of match window
-let g:ctrlp_switch_buffer = 'et'	" jump to a file if it's open already
-let g:ctrlp_mruf_max=450 		" number of recently opened files
-let g:ctrlp_max_files=0  		" do not limit the number of searchable files
+let g:ctrlp_max_height = 10   " maxiumum height of match window
+let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
+let g:ctrlp_mruf_max=450    " number of recently opened files
+let g:ctrlp_max_files=0     " do not limit the number of searchable files
 let g:ctrlp_clear_cache_on_exit = 1
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 
-" ignore files in .gitignore
-"let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-
-" func! MyCtrlPTag()
-"   let g:ctrlp_prompt_mappings = {
-"         \ 'AcceptSelection("e")': ['<cr>', '<2-LeftMouse>'],
-"         \ 'AcceptSelection("t")': ['<c-t>'],
-"         \ }
-"   CtrlPBufTag
-" endfunc
-" command! MyCtrlPTag call MyCtrlPTag()
-"
-" nmap <C-g> :MyCtrlPTag<cr>
-" imap <C-g> <esc>:MyCtrlPTag<cr>
-"
-" nmap <C-b> :CtrlPCurWD<cr>
-" imap <C-b> <esc>:CtrlPCurWD<cr>
+nmap <C-e> :CtrlPBuffer<cr>
+nmap <C-i> :CtrlPTag<cr>
+nmap <C-P> :CtrlPMRUFiles<cr>
 
 " Tweaks for browsing
 let g:netrw_banner=0        " disable annoying banner
@@ -334,24 +295,19 @@ endif
 " ==================== Completion =========================
 " use deoplete for Neovim.
 "if has('nvim')
-  let g:deoplete#enable_at_startup = 1
-
-	" Use smartcase.
-	call deoplete#custom#option('smart_case', v:true)
-  	" <C-h>, <BS>: close popup and delete backword char.
-	inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-	inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-
-
-
-  autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-  " tab or complete
-  inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>" " deoplete tab-complete
-
-
-  " <CR>: accept complete
-  " map <CR> pumvisible() ? "\<c-n><c-y> " : "\<CR>"
-
+"  let g:deoplete#enable_at_startup = 1
+"
+" " Use smartcase.
+" call deoplete#custom#option('smart_case', v:true)
+"   " <C-h>, <BS>: close popup and delete backword char.
+" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+" inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
+"
+"
+"
+"  "autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+"  " tab or complete
+"
 "  let g:deoplete#ignore_sources = {}
 "  let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
 "  let g:deoplete#sources#go#sort_class = ['func', 'type', 'var', 'const']
@@ -364,25 +320,42 @@ endif
 "  call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
 " endif
 
+" sbt server
+set signcolumn=yes
+
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {
+    \ 'scala': ['node', expand('~/scripts/sbt-server-stdio.js')]
+    \ }
+
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+
 " neomake
 call neomake#configure#automake('nw', 1000)
 
+" for vim-scala
+au BufRead,BufNewFile *.sbt set filetype=scala
+let g:scala_sort_across_groups=1
+let g:scala_first_party_namespaces='com.speedledger'
+
 " open the list automatically
-let g:neomake_open_list = 2
+" let g:neomake_open_list = 2
 let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
 let g:neomake_sbt_maker = {
       \ 'exe': 'sbt',
       \ 'args': ['-Dsbt.log.noformat=true', 'compile'],
       \ 'append_file': 0,
       \ 'auto_enabled': 1,
+      \ 'buffer_output': 1,
       \ 'output_stream': 'stdout',
-      \ 'errorformat':
-          \ '%E[%trror]\ %f:%l:\ %m,' .
-            \ '%-Z[error]\ %p^,' .
-            \ '%-C%.%#,' .
-            \ '%-G%.%#'
+      \ 'errorformat': '%E\ %#[error]\ %f:%l:\ %m,%C\ %#[error]\ \ required:%m,%C\ %#[error]\ \ found   :%m,%C\ %#[error]\ %p^,%-C%.%#,%Z,%W\ %#[warn]\ %f:%l:\ %m,%C\ %#[warn]\ %p^,%-C%.%#,%Z,%-G%.%#'
      \ }
 au BufWritePost *.scala Neomake! sbt
+
+          "\ '%E[%trror]\ %f:%l:\ %m,' .
+          "  \ '%-Z[error]\ %p^,' .
+          "  \ '%-C%.%#,' .
+          "  \ '%-G%.%#'
 
 " sqlfmt
 let g:sqlfmt_command = "sqlformat"
@@ -395,3 +368,132 @@ nmap <silent> t<C-f> :TestFile<CR>
 nmap <silent> t<C-s> :TestSuite<CR>
 nmap <silent> t<C-l> :TestLast<CR>
 nmap <silent> t<C-g> :TestVisit<CR>
+
+" ctags
+set tags=.git/tags,./.git/tags,./tags,tags
+set notagrelative
+nmap <C-F7> :!ctags -R -f ./.git/tags .<CR>
+
+" nerdtree
+nnoremap <F9> :NERDTreeToggle<CR>:NERDTreeRefreshRoot<CR>
+" enable mouse
+set mouse=a
+
+" coc mappings
+set updatetime=300
+set shortmess+=c
+set cmdheight=2
+set signcolumn=yes
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+" use <c-space>for trigger completion
+inoremap <silent><expr> <c-space> coc#refresh()
+" improve tab
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" complete completion on enter
+"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Show all diagnostics
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Find symbol of current document
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" statusline
+"set statusline=%<%f\ %h%m%r%=%{coc#status()}%=%-14.(%l,%c%V%)\ %P
+
+"set efm=%E\ %#[error]\ %f:%l:\ %m,%C\ %#[error]\ %p^,%+C%.%#,%Z,
+"set efm+=%W\ %#[warn]\ %f:%l:\ %m,%C\ %#[warn]\ %p^,%-C%.%#,%Z,
+"set efm+=%-G%.%#
+
+" ALIASES
+command! Gpraise Gblame
+command! Q q
+
+" highlighting
+syn keyword myTodo TODO FIXME XXX
+hi def link myTodo Todo
+
+""" vim-closetag
+" filenames like *.xml, *.html, *.xhtml, ...
+" These are the file extensions where this plugin is enabled.
+"
+let g:closetag_filenames = '*.html,*.xhtml,*.phtml,*.js,*.xml'
+
+" filenames like *.xml, *.xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filenames = '*.xhtml,*.jsx,*.js,*.xml'
+
+" filetypes like xml, html, xhtml, ...
+" These are the file types where this plugin is enabled.
+"
+let g:closetag_filetypes = 'html,xhtml,phtml,js,xml'
+
+" filetypes like xml, xhtml, ...
+" This will make the list of non-closing tags self-closing in the specified files.
+"
+let g:closetag_xhtml_filetypes = 'xhtml,jsx,js,xml'
+
+" integer value [0|1]
+" This will make the list of non-closing tags case-sensitive (e.g. `<Link>` will be closed while `<link>` won't.)
+"
+let g:closetag_emptyTags_caseSensitive = 0
+
+" dict
+" Disables auto-close if not in a "valid" region (based on filetype)
+"
+let g:closetag_regions = {
+    \ 'typescript.tsx': 'jsxRegion,tsxRegion',
+    \ 'javascript.jsx': 'jsxRegion',
+    \ }
+
+" Shortcut for closing tags, default is '>'
+"
+let g:closetag_shortcut = '>'
+
+" Add > at current position without closing the current tag, default is ''
+"
+let g:closetag_close_shortcut = '<leader>>'
+""" end vimclosetag
+
+""" visual search text
+" Search for selected text, forwards or backwards.
+vnoremap <silent> * :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy/<C-R><C-R>=substitute(
+  \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+vnoremap <silent> # :<C-U>
+  \let old_reg=getreg('"')<Bar>let old_regtype=getregtype('"')<CR>
+  \gvy?<C-R><C-R>=substitute(
+  \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
+  \gV:call setreg('"', old_reg, old_regtype)<CR>
+""" end
+
+" colorscheme
+colorscheme dracula
