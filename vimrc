@@ -27,6 +27,8 @@ Plug 'ntpeters/vim-better-whitespace' " show whitspace / clear whitespace
 Plug 'tpope/vim-endwise'              " end control structures
 Plug 'tpope/vim-fugitive'             " git plugin
 Plug 'tpope/vim-git'
+Plug 'tpope/vim-commentary'           " gcc to comment line
+Plug 'tpope/vim-surround'             " ys, cs, ds, S
 Plug 'junegunn/gv.vim'                " git Graph
 Plug 'AGhost-7/critiq.vim'            " PR viewer
 Plug 'airblade/vim-gitgutter'         " show git gutter
