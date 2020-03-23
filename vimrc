@@ -1,76 +1,95 @@
 call plug#begin()
 
+" if has('nvim')
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
+" else
+" Plug 'Shougo/deoplete.nvim'
+" Plug 'roxma/nvim-yarp'
+" Plug 'roxma/vim-hug-neovim-rpc'
+" endif
+
 Plug 'mileszs/ack.vim'
 Plug 'lokikl/vim-ctrlp-ag'
-Plug 'ctrlpvim/ctrlp.vim'             " use ctrl p to open files
-"if has('nvim')
-"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
-"else
-"  Plug 'Shougo/deoplete.nvim'
-"  Plug 'roxma/nvim-yarp'
-"  Plug 'roxma/vim-hug-neovim-rpc'
-"endif
+Plug 'ctrlpvim/ctrlp.vim'                       " use ctrl p to open files
 
-Plug 'scrooloose/nerdtree'            " looking at files in folders / trees
-Plug 'Xuyuanp/nerdtree-git-plugin'    " show git status in nerdtree
-Plug 'neomake/neomake'                " automatic make / lint
-Plug 'editorconfig/editorconfig-vim'  " use the project editor settings
-Plug 'pangloss/vim-javascript'        " support for javascript
-Plug 'prettier/vim-prettier'          " use the project prettier settings
-Plug 'ternjs/tern_for_vim'            " go to defintion etc
-Plug 'b4b4r07/vim-sqlfmt'             " format sql
-Plug 'Yggdroot/indentLine'            " show indents
-Plug 'godlygeek/tabular'              " tab things up
-Plug 'gabrielelana/vim-markdown'        " markdown, depends on tabular
-Plug 'chr4/nginx.vim'                 " nginx highlighting
-Plug 'ntpeters/vim-better-whitespace' " show whitspace / clear whitespace
-Plug 'tpope/vim-endwise'              " end control structures
-Plug 'tpope/vim-fugitive'             " git plugin
+Plug 'scrooloose/nerdtree'                      " looking at files in folders / trees
+Plug 'Xuyuanp/nerdtree-git-plugin'              " show git status in nerdtree
+Plug 'neomake/neomake'                          " automatic make / lint
+Plug 'editorconfig/editorconfig-vim'            " use the project editor settings
+Plug 'pangloss/vim-javascript'                  " support for javascript
+Plug 'prettier/vim-prettier'                    " use the project prettier settings
+Plug 'ternjs/tern_for_vim'                      " go to defintion etc
+                                                " Plug 'b4b4r07/vim-sqlfmt'                                      " format sql
+Plug 'Yggdroot/indentLine'                      " show indents
+Plug 'godlygeek/tabular'                        " tab things up
+Plug 'gabrielelana/vim-markdown'                " markdown, depends on tabular
+Plug 'ntpeters/vim-better-whitespace'           " show whitspace / clear whitespace
+Plug 'tpope/vim-endwise'                        " end control structures
+Plug 'tpope/vim-fugitive'                       " git plugin
 Plug 'tpope/vim-git'
-Plug 'tpope/vim-commentary'           " gcc to comment line
-Plug 'tpope/vim-surround'             " ys, cs, ds, S
-Plug 'junegunn/gv.vim'                " git Graph
-Plug 'AGhost-7/critiq.vim'            " PR viewer
-Plug 'airblade/vim-gitgutter'         " show git gutter
-Plug 'whiteinge/diffconflicts'        " better git diff conflicts
-Plug 'elzr/vim-json'                  " vim syntax
-Plug 'terryma/vim-multiple-cursors'   " multiple cursors for multine line select etc
-Plug 'mhinz/vim-sayonara'             " keep stuff nice
-Plug 'stephpy/vim-yaml'               " faster yaml
-Plug 'Raimondi/delimitMate'           " match '{[ etc
-Plug 'janko/vim-test'               " run tests
+Plug 'tpope/vim-commentary'                     " gcc to comment line
+Plug 'tpope/vim-surround'                       " ys, cs, ds, S
+" Plug 'junegunn/gv.vim'                                         " git Graph
+" Plug 'AGhost-7/critiq.vim'                                     " PR viewer
+Plug 'airblade/vim-gitgutter'                   " show git gutter
+Plug 'whiteinge/diffconflicts'                  " better git diff conflicts
+Plug 'elzr/vim-json'                            " vim syntax
+" Plug 'terryma/vim-multiple-cursors'                            " multiple cursors for multine line select etc
+Plug 'mhinz/vim-sayonara'                       " keep stuff nice
+Plug 'stephpy/vim-yaml'                         " faster yaml
+Plug 'Raimondi/delimitMate'                     " match '{[ etc
+Plug 'janko/vim-test'                           " run tests
 Plug 'derekwyatt/vim-scala'
-Plug 'eed3si9n/LanguageClient-neovim'
-Plug 'Chiel92/vim-autoformat'         " automatically format code
+"Plug 'eed3si9n/LanguageClient-neovim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completer, support for language server
-Plug 'ryanoasis/vim-devicons' 				" icon support for different plugins using patched nerd font
-Plug 'vim-airline/vim-airline'        " Airline
-Plug 'vim-airline/vim-airline-themes' " and theme
-Plug 'chrisbra/csv.vim'               " csv filetype plugin
-Plug 'alvan/vim-closetag'             " html close tags
-Plug 'mattn/emmet-vim'                " enclose in tags
+Plug 'ryanoasis/vim-devicons'                   " icon support for different plugins using patched nerd font
+Plug 'vim-airline/vim-airline'                  " Airline
+Plug 'vim-airline/vim-airline-themes'           " and theme
+Plug 'chrisbra/csv.vim'                         " csv filetype plugin
+"Plug 'alvan/vim-closetag'                       " html close tags
+"Plug 'mattn/emmet-vim'                          " enclose in tags
 
 " colorschemes
-Plug 'flazz/vim-colorschemes'
-Plug 'pthorin/cosme.vim'
+" Plug 'flazz/vim-colorschemes'
+"Plug 'pthorin/cosme.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 " set the leader straight away
-let mapleader  = ","
-" function to check if running on battery
-function! MyOnBattery()
-  return ['1'] == ['0']
-endfunction
+let mapleader  = " "
+
+" copy / paste
+noremap <leader>y "+y
+noremap <leader>Y "+Y
+noremap <leader>p "+p
+noremap <leader>P "+P
+
+" move between buffers
+map <C-h> <Esc>:bprev<CR>
+map <C-l> <Esc>:bnext<CR>
+map <M-l> <Esc>:tabnext<CR>
+map <M-h> <Esc>:tabprev<CR>
+
+" move lines up and down
+nnoremap <C-j> :m .+1<CR>==
+nnoremap <C-k> :m .-2<CR>==
+inoremap <C-j> <Esc>:m .+1<CR>==gi
+inoremap <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <C-j> :m '>+1<CR>gv=gv
+vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " autoformat
 noremap <F5> :Autoformat<CR>
+noremap <leader>r :Autoformat<CR>
 "" scalafmt
 let g:formatdef_scalafmt = "'scalafmt --stdin'"
 let g:formatters_scala = ['scalafmt']
+" scala comment indent
+let g:scala_scaladoc_indent = 1
 
 " powerline symbols
 let g:airline_powerline_fonts = 1
-let g:airline_theme='biogoo'
+let g:airline_theme='dracula'
 
 " don't conceal " in json
 let g:vim_json_syntax_conceal = 0
@@ -81,12 +100,6 @@ nnoremap <leader>q :Sayonara<CR>
 " Prettier
 let g:prettier#autoformat = 0
 let g:prettier#quickfix_enabled = 0
-
-"if MyOnBattery()
-"  autocmd BufWritePre *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
-"else
-"  autocmd BufWritePre,TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.vue,*.yaml PrettierAsync
-"endif
 
 map <leader>p :w<cr>:Prettier<CR>:w<CR>:!eslint --fix %<cr>:cwindow<cr>:redraw!<cr>
 
@@ -107,6 +120,7 @@ nnoremap <leader>lo :lope<cr>
 " Go to tag (defintion)
 nmap <silent> <C-b> <C-]>
 
+set omnifunc=syntaxcomplete#Complete
 
 set noerrorbells
 set number
@@ -122,6 +136,8 @@ set encoding=utf-8
 set autoread
 
 set ic hls is smartcase
+set cursorline
+set cursorcolumn
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
@@ -131,13 +147,42 @@ set laststatus=2
 set splitright
 set splitbelow
 set undofile
-
+set showmatch
 
 set background=dark
 
 set ruler
 
 set fileformats=unix,dos,mac "prefer unix over windows over os 9"
+
+" read command into new buffer
+command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
+function! s:RunShellCommand(cmdline)
+  let isfirst = 1
+  let words = []
+  for word in split(a:cmdline)
+    if isfirst
+      let isfirst = 0  " don't change first word (shell command)
+    else
+      if word[0] =~ '\v[%#<]'
+        let word = expand(word)
+      endif
+      let word = shellescape(word, 1)
+    endif
+    call add(words, word)
+  endfor
+  let expanded_cmdline = join(words)
+  botright new
+  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
+  call setline(1, 'You entered:  ' . a:cmdline)
+  call setline(2, 'Expanded to:  ' . expanded_cmdline)
+  call append(line('$'), substitute(getline(2), '.', '=', 'g'))
+  silent execute '$read !'. expanded_cmdline
+  1
+endfunction
+
+command! -complete=file -nargs=* ScalaStyle call s:RunShellCommand('scalastyle -c /home/pt/repos/dotfiles/scalastyle_config.xml '.<q-args>)
+command! -complete=file -nargs=* Codacy call s:RunShellCommand('codacy-analysis-cli analyse --tool codacy-scalameta-pro '.<q-args>)
 
 "syntax highlighting
 syntax sync minlines=256
@@ -274,6 +319,7 @@ let g:delimitMate_expand_space = 1
 let g:delimitMate_smart_quotes = 1
 let g:delimitMate_expand_inside_quotes = 0
 let g:delimitMate_smart_matchpairs = '^\%(\w\|\$\)'
+let g:delimitMate_expand_tab = 0
 
 " ==================== vim-json ====================
 
@@ -282,6 +328,7 @@ let g:vim_json_syntax_conceal = 0
 " ==================== vim-markdown ====================
 
 let g:vim_markdown_conceal = 0
+let g:markdown_enable_spell_checking = 0
 
 " ==================== tabular  ===========================
 
@@ -343,16 +390,16 @@ let g:scala_first_party_namespaces='com.speedledger'
 " open the list automatically
 " let g:neomake_open_list = 2
 let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
-let g:neomake_sbt_maker = {
-      \ 'exe': 'sbt',
-      \ 'args': ['-Dsbt.log.noformat=true', 'compile'],
-      \ 'append_file': 0,
-      \ 'auto_enabled': 1,
-      \ 'buffer_output': 1,
-      \ 'output_stream': 'stdout',
-      \ 'errorformat': '%E\ %#[error]\ %f:%l:\ %m,%C\ %#[error]\ \ required:%m,%C\ %#[error]\ \ found   :%m,%C\ %#[error]\ %p^,%-C%.%#,%Z,%W\ %#[warn]\ %f:%l:\ %m,%C\ %#[warn]\ %p^,%-C%.%#,%Z,%-G%.%#'
-     \ }
-au BufWritePost *.scala Neomake! sbt
+" let g:neomake_sbt_maker = {
+"       \ 'exe': 'sbt',
+"       \ 'args': ['-Dsbt.log.noformat=true', 'compile'],
+"       \ 'append_file': 0,
+"       \ 'auto_enabled': 1,
+"       \ 'buffer_output': 1,
+"       \ 'output_stream': 'stdout',
+"       \ 'errorformat': '%E\ %#[error]\ %f:%l:\ %m,%C\ %#[error]\ \ required:%m,%C\ %#[error]\ \ found   :%m,%C\ %#[error]\ %p^,%-C%.%#,%Z,%W\ %#[warn]\ %f:%l:\ %m,%C\ %#[warn]\ %p^,%-C%.%#,%Z,%-G%.%#'
+"      \ }
+" au BufWritePost *.scala Neomake! sbt
 
           "\ '%E[%trror]\ %f:%l:\ %m,' .
           "  \ '%-Z[error]\ %p^,' .
@@ -365,11 +412,11 @@ let g:sqlfmt_options = "-r -k upper"
 
 " tests
 " these "Ctrl mappings" work well when Caps Lock is mapped to Ctrl
-nmap <silent> t<C-n> :TestNearest<CR>
-nmap <silent> t<C-f> :TestFile<CR>
-nmap <silent> t<C-s> :TestSuite<CR>
-nmap <silent> t<C-l> :TestLast<CR>
-nmap <silent> t<C-g> :TestVisit<CR>
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tg :TestVisit<CR>
 
 " ctags
 set tags=.git/tags,./.git/tags,./tags,tags
@@ -382,23 +429,36 @@ nnoremap <F9> :NERDTreeToggle<CR>:NERDTreeRefreshRoot<CR>
 set mouse=a
 
 " coc mappings
-set updatetime=300
-set shortmess+=c
-set cmdheight=2
-set signcolumn=yes
-inoremap <silent><expr> <c-space> coc#refresh()
+set hidden         " TextEdit might fail without this
+set updatetime=300 " Recommended setting instead of default 4000
+set shortmess+=c   " don't give |inc-completion-menu| messages
+set cmdheight=2    " better display for messages
+set signcolumn=yes " always show sign column
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader><F6> <Plug>(coc-rename)
+" xmap <leader>r  <Plug>(coc-format-selected)
+" nmap <leader>r  <Plug>(coc-format-selected)
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+map <leader>o :OR<CR>
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
+
+" inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 
 inoremap <silent><expr> <Tab>
       \ pumvisible() ? "\<C-n>" :
@@ -412,6 +472,17 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " complete completion on enter
 "inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use K to show documentation in preview window
+nnoremap <silent> H :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
 
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -435,9 +506,12 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " ALIASES
 command! Gpraise Gblame
 command! Q q
+command! Gau !git add --update
+command! Gcane !git commit --amend --no-edit
+command! Gpf !git push --force-with-lease
 
 " highlighting
-syn keyword myTodo TODO FIXME XXX
+syn keyword myTodo TODO FIXME XXX HACK
 hi def link myTodo Todo
 
 """ vim-closetag
@@ -499,3 +573,5 @@ vnoremap <silent> # :<C-U>
 
 " colorscheme
 colorscheme dracula
+highlight CursorLine ctermbg=016 cterm=NONE
+hi Normal guibg=NONE ctermbg=NONE
