@@ -17,7 +17,8 @@ Plug 'Xuyuanp/nerdtree-git-plugin'              " show git status in nerdtree
 Plug 'neomake/neomake'                          " automatic make / lint
 Plug 'editorconfig/editorconfig-vim'            " use the project editor settings
 Plug 'pangloss/vim-javascript'                  " support for javascript
-Plug 'prettier/vim-prettier'                    " use the project prettier settings
+" post install (yarn install | npm install) then load plugin only for editing supported files
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'ternjs/tern_for_vim'                      " go to defintion etc
                                                 " Plug 'b4b4r07/vim-sqlfmt'                                      " format sql
 Plug 'Yggdroot/indentLine'                      " show indents
@@ -48,6 +49,11 @@ Plug 'vim-airline/vim-airline-themes'           " and theme
 Plug 'chrisbra/csv.vim'                         " csv filetype plugin
 "Plug 'alvan/vim-closetag'                       " html close tags
 "Plug 'mattn/emmet-vim'                          " enclose in tags
+" typescript
+Plug 'leafgarland/typescript-vim'               " provides syntax highlighting
+Plug 'maxmellon/vim-jsx-pretty'                 " support for jsx highlighting
+Plug 'jparise/vim-graphql'                      " GraphQL syntax
+
 
 " colorschemes
 " Plug 'flazz/vim-colorschemes'
@@ -56,13 +62,21 @@ Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
 
 " set the leader straight away
-let mapleader  = " "
+let mapleader = " "
 
 " copy / paste
 noremap <leader>y "+y
 noremap <leader>Y "+Y
 noremap <leader>p "+p
 noremap <leader>P "+P
+
+" delete without yanking
+nnoremap <leader>d "_d
+vnoremap <leader>d "_d
+
+" replace currently selected text with default register
+" without yanking it
+vnoremap <leader>p "_dP"
 
 " move between buffers
 map <C-h> <Esc>:bprev<CR>
@@ -98,10 +112,8 @@ let g:vim_json_syntax_conceal = 0
 nnoremap <leader>q :Sayonara<CR>
 
 " Prettier
-let g:prettier#autoformat = 0
-let g:prettier#quickfix_enabled = 0
-
-map <leader>p :w<cr>:Prettier<CR>:w<CR>:!eslint --fix %<cr>:cwindow<cr>:redraw!<cr>
+command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+nmap <leader>rc :Prettier<cr>
 
 " GitGutter
 nnoremap <leader>gn :GitGutterNextHunk<cr> " go to next hunk
@@ -133,6 +145,7 @@ set nowritebackup
 set splitright
 set splitbelow
 set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,default,cp437,latin1
 set autoread
 
 set ic hls is smartcase
@@ -341,6 +354,13 @@ if exists(":Tabularize")
   vmap <leader>a\| :Tabularize /\|<CR>
 endif
 
+
+" Go to column 80
+nmap <leader>w 80\|
+
+" Insert current date
+nmap <leader>dc i<C-r>=strftime('%F')<cr><esc>
+
 " ==================== Completion =========================
 " use deoplete for Neovim.
 "if has('nvim')
@@ -372,12 +392,12 @@ endif
 " sbt server
 set signcolumn=yes
 
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-    \ 'scala': ['node', expand('~/scripts/sbt-server-stdio.js')]
-    \ }
-
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+" let g:LanguageClient_autoStart = 1
+" let g:LanguageClient_serverCommands = {
+"     \ 'scala': ['node', expand('~/scripts/sbt-server-stdio.js')]
+"     \ }
+"
+" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 
 " neomake
 call neomake#configure#automake('nw', 1000)
@@ -422,6 +442,7 @@ nmap <silent> <leader>tg :TestVisit<CR>
 set tags=.git/tags,./.git/tags,./tags,tags
 set notagrelative
 nmap <C-F7> :!ctags -R -f ./.git/tags .<CR>
+nmap <F31> :!ctags -R -f ./.git/tags .<CR>
 
 " nerdtree
 nnoremap <F9> :NERDTreeToggle<CR>:NERDTreeRefreshRoot<CR>
