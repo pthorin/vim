@@ -440,7 +440,7 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-nmap <leader><F6> <Plug>(coc-rename)
+nmap <leader><F2> <Plug>(coc-rename)
 " xmap <leader>r  <Plug>(coc-format-selected)
 " nmap <leader>r  <Plug>(coc-format-selected)
 " Remap for do codeAction of current line
