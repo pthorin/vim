@@ -20,6 +20,7 @@ Plug 'pangloss/vim-javascript'                  " support for javascript
 " post install (yarn install | npm install) then load plugin only for editing supported files
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'ternjs/tern_for_vim'                      " go to defintion etc
+Plug 'itspriddle/vim-shellcheck'                " shellcheck
                                                 " Plug 'b4b4r07/vim-sqlfmt'                                      " format sql
 Plug 'Yggdroot/indentLine'                      " show indents
 Plug 'godlygeek/tabular'                        " tab things up
