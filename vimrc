@@ -57,6 +57,7 @@ Plug 'chrisbra/csv.vim'                         " csv filetype plugin
 Plug 'leafgarland/typescript-vim'               " provides syntax highlighting
 Plug 'maxmellon/vim-jsx-pretty'                 " support for jsx highlighting
 Plug 'jparise/vim-graphql'                      " GraphQL syntax
+Plug 'puremourning/vimspector'
 
 
 " colorschemes
