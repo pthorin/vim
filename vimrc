@@ -212,6 +212,12 @@ endfunction
 command! -complete=file -nargs=* ScalaStyle call s:RunShellCommand('scalastyle -c /home/pt/repos/dotfiles/scalastyle_config.xml '.<q-args>)
 command! -complete=file -nargs=* Codacy call s:RunShellCommand('codacy-analysis-cli analyse --tool codacy-scalameta-pro '.<q-args>)
 
+" autosave
+function Autosave()
+  autocmd TextChanged,TextChangedI <buffer> write
+endfunction
+command Autosave :call Autosave()
+
 "syntax highlighting
 syntax sync minlines=256
 set synmaxcol=300
