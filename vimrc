@@ -25,6 +25,8 @@ Plug 'itspriddle/vim-shellcheck'                " shellcheck
 Plug 'Yggdroot/indentLine'                      " show indents
 Plug 'godlygeek/tabular'                        " tab things up
 Plug 'gabrielelana/vim-markdown'                " markdown, depends on tabular
+Plug 'previm/previm' " preview markdown in browser
+let g:previm_open_cmd = 'xdg-open'
 Plug 'ntpeters/vim-better-whitespace'           " show whitspace / clear whitespace
 Plug 'tpope/vim-endwise'                        " end control structures
 Plug 'tpope/vim-fugitive'                       " git plugin
