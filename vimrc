@@ -388,21 +388,14 @@ let g:scala_first_party_namespaces='com.speedledger'
 " open the list automatically
 " let g:neomake_open_list = 2
 let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
-" let g:neomake_sbt_maker = {
-"       \ 'exe': 'sbt',
-"       \ 'args': ['-Dsbt.log.noformat=true', 'compile'],
-"       \ 'append_file': 0,
-"       \ 'auto_enabled': 1,
-"       \ 'buffer_output': 1,
-"       \ 'output_stream': 'stdout',
-"       \ 'errorformat': '%E\ %#[error]\ %f:%l:\ %m,%C\ %#[error]\ \ required:%m,%C\ %#[error]\ \ found   :%m,%C\ %#[error]\ %p^,%-C%.%#,%Z,%W\ %#[warn]\ %f:%l:\ %m,%C\ %#[warn]\ %p^,%-C%.%#,%Z,%-G%.%#'
-"      \ }
-" au BufWritePost *.scala Neomake! sbt
 
-          "\ '%E[%trror]\ %f:%l:\ %m,' .
-          "  \ '%-Z[error]\ %p^,' .
-          "  \ '%-C%.%#,' .
-          "  \ '%-G%.%#'
+" remap [  ] for unimpaired
+nmap < [
+nmap > ]
+omap < [
+omap > ]
+xmap < [
+xmap > ]
 
 " sqlfmt
 let g:sqlfmt_command = "sqlformat"
