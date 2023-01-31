@@ -1,13 +1,5 @@
 call plug#begin()
 
-" if has('nvim')
-" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'  }
-" else
-" Plug 'Shougo/deoplete.nvim'
-" Plug 'roxma/nvim-yarp'
-" Plug 'roxma/vim-hug-neovim-rpc'
-" endif
-
 Plug 'mileszs/ack.vim'
 Plug 'lokikl/vim-ctrlp-ag'
 Plug 'ctrlpvim/ctrlp.vim'                       " use ctrl p to open files
@@ -382,43 +374,8 @@ nmap <leader>w 80\|
 " Insert current date
 nmap <leader>dc i<C-r>=strftime('%F')<cr><esc>
 
-" ==================== Completion =========================
-" use deoplete for Neovim.
-"if has('nvim')
-"  let g:deoplete#enable_at_startup = 1
-"
-" " Use smartcase.
-" call deoplete#custom#option('smart_case', v:true)
-"   " <C-h>, <BS>: close popup and delete backword char.
-" inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
-" inoremap <expr><BS>  deoplete#smart_close_popup()."\<C-h>"
-"
-"
-"
-"  "autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-"  " tab or complete
-"
-"  let g:deoplete#ignore_sources = {}
-"  let g:deoplete#ignore_sources._ = ['buffer', 'member', 'tag', 'file', 'neosnippet']
-"  let g:deoplete#sources#go#sort_class = ['func', 'type', 'var', 'const']
-"  let g:deoplete#sources#go#align_class = 1
-"
-"
-"  " Use partial fuzzy matches like YouCompleteMe
-"  call deoplete#custom#source('_', 'matchers', ['matcher_fuzzy'])
-"  call deoplete#custom#source('_', 'converters', ['converter_remove_paren'])
-"  call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-" endif
-
 " sbt server
 set signcolumn=yes
-
-" let g:LanguageClient_autoStart = 1
-" let g:LanguageClient_serverCommands = {
-"     \ 'scala': ['node', expand('~/scripts/sbt-server-stdio.js')]
-"     \ }
-"
-" nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 
 " neomake
 call neomake#configure#automake('nw', 1000)
