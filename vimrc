@@ -33,6 +33,7 @@ Plug 'tpope/vim-fugitive'                       " git plugin
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-commentary'                     " gcc to comment line
 Plug 'tpope/vim-surround'                       " ys, cs, ds, S
+Plug 'tpope/vim-unimpaired'
 " Plug 'junegunn/gv.vim'                                         " git Graph
 " Plug 'AGhost-7/critiq.vim'                                     " PR viewer
 Plug 'airblade/vim-gitgutter'                   " show git gutter
