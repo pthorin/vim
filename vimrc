@@ -59,12 +59,22 @@ Plug 'maxmellon/vim-jsx-pretty'                 " support for jsx highlighting
 Plug 'jparise/vim-graphql'                      " GraphQL syntax
 Plug 'puremourning/vimspector'
 
+" formatting
+" Add maktaba and codefmt to the runtimepath.
+" (The latter must be installed before it can be used.)
+Plug 'google/vim-maktaba'
+Plug 'google/vim-codefmt'
+" Also add Glaive, which is used to configure codefmt's maktaba flags. See
+" `:help :Glaive` for usage.
+Plug 'google/vim-glaive'
 
 " colorschemes
 " Plug 'flazz/vim-colorschemes'
 "Plug 'pthorin/cosme.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
 call plug#end()
+
+call glaive#Install()
 
 " set the leader straight away
 let mapleader = " "
