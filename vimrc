@@ -44,7 +44,7 @@ Plug 'mhinz/vim-sayonara'                       " keep stuff nice
 Plug 'stephpy/vim-yaml'                         " faster yaml
 Plug 'Raimondi/delimitMate'                     " match '{[ etc
 Plug 'janko/vim-test'                           " run tests
-Plug 'derekwyatt/vim-scala'
+"Plug 'derekwyatt/vim-scala'
 "Plug 'eed3si9n/LanguageClient-neovim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completer, support for language server
 Plug 'ryanoasis/vim-devicons'                   " icon support for different plugins using patched nerd font
