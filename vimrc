@@ -423,7 +423,8 @@ nmap <C-F7> :!ctags -R -f ./.git/tags .<CR>
 nmap <F31> :!ctags -R -f ./.git/tags .<CR>
 
 " nerdtree
-nnoremap <C-F9> :NERDTreeToggle<CR>:NERDTreeRefreshRoot<CR>
+"nnoremap <F9> :NERDTreeToggle<CR>:NERDTreeRefreshRoot<CR>
+nnoremap <F9> :NERDTreeFind<CR>:NERDTreeRefreshRoot<CR>
 " enable mouse
 set mouse=a
 
