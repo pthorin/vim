@@ -445,6 +445,7 @@ nmap <leader><F2> <Plug>(coc-rename)
 " nmap <leader>r  <Plug>(coc-format-selected)
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <a-cr>  <Plug>(coc-codeaction)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
 
