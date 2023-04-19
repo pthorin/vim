@@ -11,7 +11,7 @@ Plug 'editorconfig/editorconfig-vim'            " use the project editor setting
 Plug 'pangloss/vim-javascript'                  " support for javascript
 " post install (yarn install | npm install) then load plugin only for editing supported files
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-Plug 'ternjs/tern_for_vim'                      " go to defintion etc
+" Replaced with coc-tsserver Plug 'ternjs/tern_for_vim'                      " go to defintion etc
 Plug 'itspriddle/vim-shellcheck'                " shellcheck
                                                 " Plug 'b4b4r07/vim-sqlfmt'                                      " format sql
 Plug 'Yggdroot/indentLine'                      " show indents
@@ -22,6 +22,7 @@ let g:previm_open_cmd = 'xdg-open'
 Plug 'ntpeters/vim-better-whitespace'           " show whitspace / clear whitespace
 Plug 'tpope/vim-endwise'                        " end control structures
 Plug 'tpope/vim-fugitive'                       " git plugin
+Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-commentary'                     " gcc to comment line
 Plug 'tpope/vim-surround'                       " ys, cs, ds, S
@@ -416,7 +417,7 @@ nmap <C-F7> :!ctags -R -f ./.git/tags .<CR>
 nmap <F31> :!ctags -R -f ./.git/tags .<CR>
 
 " nerdtree
-"nnoremap <F9> :NERDTreeToggle<CR>:NERDTreeRefreshRoot<CR>
+nnoremap <F10> :NERDTreeToggle<CR>:NERDTreeRefreshRoot<CR>
 nnoremap <F9> :NERDTreeFind<CR>:NERDTreeRefreshRoot<CR>
 " enable mouse
 set mouse=a
@@ -564,6 +565,9 @@ vnoremap <silent> # :<C-U>
   \escape(@", '?\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 """ end
+
+" TERMINAL
+:tnoremap <Esc> <C-\><C-n>
 
 " colorscheme
 colorscheme dracula
