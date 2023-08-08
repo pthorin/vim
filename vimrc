@@ -4,6 +4,7 @@ Plug 'mileszs/ack.vim'
 Plug 'lokikl/vim-ctrlp-ag'
 Plug 'ctrlpvim/ctrlp.vim'                       " use ctrl p to open files
 
+Plug 'frazrepo/vim-rainbow'                     " rainbow brackets
 Plug 'scrooloose/nerdtree'                      " looking at files in folders / trees
 Plug 'Xuyuanp/nerdtree-git-plugin'              " show git status in nerdtree
 Plug 'neomake/neomake'                          " automatic make / lint
@@ -11,15 +12,16 @@ Plug 'editorconfig/editorconfig-vim'            " use the project editor setting
 Plug 'pangloss/vim-javascript'                  " support for javascript
 " post install (yarn install | npm install) then load plugin only for editing supported files
 " Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
-" Replaced with coc-tsserver Plug 'ternjs/tern_for_vim'                      " go to defintion etc
+Plug 'ternjs/tern_for_vim'                      " go to defintion etc
 Plug 'itspriddle/vim-shellcheck'                " shellcheck
                                                 " Plug 'b4b4r07/vim-sqlfmt'                                      " format sql
 Plug 'Yggdroot/indentLine'                      " show indents
 Plug 'godlygeek/tabular'                        " tab things up
 Plug 'gabrielelana/vim-markdown'                " markdown, depends on tabular
+Plug 'lgalke/vim-compiler-vale'                 " prose linter
 Plug 'previm/previm' " preview markdown in browser
 let g:previm_open_cmd = 'xdg-open'
-Plug 'ntpeters/vim-better-whitespace'           " show whitspace / clear whitespace
+Plug 'ntpeters/vim-better-whitespace'           " show whitespace / clear whitespace
 Plug 'tpope/vim-endwise'                        " end control structures
 Plug 'tpope/vim-fugitive'                       " git plugin
 Plug 'tpope/vim-abolish'
@@ -65,10 +67,13 @@ Plug 'google/vim-glaive'
 " Plug 'flazz/vim-colorschemes'
 "Plug 'pthorin/cosme.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
+
 call plug#end()
 
 call glaive#Install()
 
+" rainbow brackets
+let g:rainbow_active = 1
 " set the leader straight away
 let mapleader = " "
 
@@ -84,7 +89,7 @@ vnoremap <leader>d "_d
 
 " replace currently selected text with default register
 " without yanking it
-vnoremap <leader>p "_dP"
+"vnoremap <leader>p "_dP"
 
 " move between buffers
 map <C-h> <Esc>:bprev<CR>
@@ -93,16 +98,15 @@ map <M-l> <Esc>:tabnext<CR>
 map <M-h> <Esc>:tabprev<CR>
 
 " move lines up and down
-nnoremap <C-j> :m .+1<CR>==
-nnoremap <C-k> :m .-2<CR>==
-inoremap <C-j> <Esc>:m .+1<CR>==gi
-inoremap <C-k> <Esc>:m .-2<CR>==gi
-vnoremap <C-j> :m '>+1<CR>gv=gv
-vnoremap <C-k> :m '<-2<CR>gv=gv
+"nnoremap <C-j> :m .+1<CR>==
+"nnoremap <C-k> :m .-2<CR>==
+"inoremap <C-j> <Esc>:m .+1<CR>==gi
+"inoremap <C-k> <Esc>:m .-2<CR>==gi
+"vnoremap <C-j> :m '>+1<CR>gv=gv
+"vnoremap <C-k> :m '<-2<CR>gv=gv
 
 " autoformat
 noremap <F5> :Autoformat<CR>
-noremap <leader>r :Autoformat<CR>
 "" scalafmt
 let g:formatdef_scalafmt = "'scalafmt --stdin'"
 let g:formatters_scala = ['scalafmt']
@@ -120,8 +124,8 @@ let g:vim_json_syntax_conceal = 0
 nnoremap <leader>q :Sayonara<CR>
 
 " Prettier
-command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
-nmap <leader>rc :Prettier<cr>
+" command! -nargs=0 Prettier :call CocAction('runCommand', 'prettier.formatFile')
+" nmap <leader>rc :Prettier<cr>
 
 " GitGutter
 nnoremap <leader>gn :GitGutterNextHunk<cr> " go to next hunk
@@ -220,7 +224,8 @@ set re=1
 command! -nargs=* -complete=help Help vertical belowright help <args>
 autocmd FileType help wincmd L
 " Set tabstop etc for java
-autocmd FileType java setlocal ts=4 sw=4 sts=4
+"autocmd FileType java setlocal ts=4 sw=4 sts=4
+autocmd FileType xml setlocal tabstop=4 shiftwidth=4 softtabstop=4
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -291,6 +296,7 @@ set wildignore+=go/bin                           " Go bin files
 set wildignore+=go/bin-vagrant                   " Go bin-vagrant files
 set wildignore+=*.pyc                            " Python byte code
 set wildignore+=*.orig                           " Merge resolution files
+set wildignore+=**/target/**
 
 " ==================== CtrlP ====================
 if executable('ag')
@@ -391,12 +397,12 @@ let g:scala_first_party_namespaces='com.speedledger'
 let g:neomake_javascript_eslint_exe = $PWD .'/node_modules/.bin/eslint'
 
 " remap [  ] for unimpaired
-nmap < [
-nmap > ]
-omap < [
-omap > ]
-xmap < [
-xmap > ]
+" nmap < [
+" nmap > ]
+" omap < [
+" omap > ]
+" xmap < [
+" xmap > ]
 
 " sqlfmt
 let g:sqlfmt_command = "sqlformat"
@@ -433,15 +439,25 @@ set signcolumn=yes " always show sign column
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gs :CocCommand java.action.navigateToSuperImplementation<cr>
 nmap <silent> gr <Plug>(coc-references)
+nmap <silent> gu <Plug>(coc-references)
 nmap <leader><F2> <Plug>(coc-rename)
+nmap <silent> ]d :call CocAction('diagnosticNext')<cr>
+nmap <silent> [d :call CocAction('diagnosticPrev')<cr>
 " xmap <leader>r  <Plug>(coc-format-selected)
-" nmap <leader>r  <Plug>(coc-format-selected)
+vmap <leader>r  <Plug>(coc-format-selected)
+nmap <leader>rc  :call CocAction('format')<cr>
 " Remap for do codeAction of current line
 nmap <leader>ac  <Plug>(coc-codeaction)
+xmap <leader>b  <Plug>(coc-codeaction-selected)
+nmap <leader>b  <Plug>(coc-codeaction-selected)
+vmap <leader>b  <Plug>(coc-codeaction-selected)
 nmap <a-cr>  <Plug>(coc-codeaction)
+vmap <a-cr>  <Plug>(coc-codeaction-selected)
 " Fix autofix problem of current line
 nmap <leader>qf  <Plug>(coc-fix-current)
+nmap <leader>å :CocCommand java.clean.workspace <cr>
 
 " use `:OR` for organize import of current buffer
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
@@ -466,7 +482,7 @@ inoremap <silent><expr> <c-space> coc#refresh()
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " complete completion on enter
-"inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Use K to show documentation in preview window
 nnoremap <silent> H :call <SID>show_documentation()<CR>
@@ -490,7 +506,7 @@ nnoremap <silent> <space>j  :<C-u>CocNext<CR>
 " Do default action for previous item.
 nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
-nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+"nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " statusline
 "set statusline=%<%f\ %h%m%r%=%{coc#status()}%=%-14.(%l,%c%V%)\ %P
 
