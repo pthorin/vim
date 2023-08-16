@@ -1,3 +1,5 @@
+lua require('plugins')
+
 call plug#begin()
 
 Plug 'mileszs/ack.vim'
@@ -63,10 +65,10 @@ Plug 'google/vim-codefmt'
 " `:help :Glaive` for usage.
 Plug 'google/vim-glaive'
 
+" Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 " colorschemes
 " Plug 'flazz/vim-colorschemes'
 "Plug 'pthorin/cosme.vim'
-Plug 'dracula/vim', { 'as': 'dracula' }
 
 call plug#end()
 
@@ -335,6 +337,13 @@ nmap <C-e> :CtrlPBuffer<cr>
 nmap <C-i> :CtrlPTag<cr>
 nmap <C-P> :CtrlPMRUFiles<cr>
 
+" ========================= Telescope ===========================
+nnoremap <Leader>pf :lua require'telescope.builtin'.find_files{}<cr>
+nnoremap <Leader>pb :lua require'telescope.builtin'.buffers{}<cr>
+nnoremap <Leader>pg :lua require'telescope.builtin'.git_files{}<cr>
+nnoremap <Leader>ps :lua require'telescope.builtin'.grep_string{}<cr>
+nnoremap <Leader>pl :lua require'telescope.builtin'.live_grep{}<cr>
+
 " Tweaks for browsing
 let g:netrw_banner=0        " disable annoying banner
 let g:netrw_browse_split=4  " open in prior window
@@ -582,10 +591,16 @@ vnoremap <silent> # :<C-U>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
 """ end
 
+" BASE64 decode encode
+vnoremap <leader>ve y:let @"=system('base64 -w 0', @")<cr>gvP
+vnoremap <leader>vd y:let @"=system('base64 --decode', @")<cr>gvP
+
 " TERMINAL
 :tnoremap <Esc> <C-\><C-n>
 
 " colorscheme
-colorscheme dracula
+"colorscheme dracula
+" colorscheme tokyonight
+colorscheme catppuccin-mocha
 highlight CursorLine ctermbg=016 cterm=NONE
 hi Normal guibg=NONE ctermbg=NONE
