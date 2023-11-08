@@ -4,7 +4,7 @@ call plug#begin()
 
 Plug 'mileszs/ack.vim'
 Plug 'lokikl/vim-ctrlp-ag'
-Plug 'ctrlpvim/ctrlp.vim'                       " use ctrl p to open files
+"Plug 'ctrlpvim/ctrlp.vim'                       " use ctrl p to open files
 
 Plug 'frazrepo/vim-rainbow'                     " rainbow brackets
 Plug 'scrooloose/nerdtree'                      " looking at files in folders / trees
@@ -324,7 +324,7 @@ if executable('ag')
   " let g:ctrlp_ag_search_base = 'app/controllers' " both relative and absolute path supported
 endif
 
-let g:ctrlp_cmd = 'CtrlP'
+"let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_max_height = 10   " maxiumum height of match window
 let g:ctrlp_switch_buffer = 'et'  " jump to a file if it's open already
@@ -341,6 +341,7 @@ nmap <C-P> :CtrlPMRUFiles<cr>
 nnoremap <Leader>pf :lua require'telescope.builtin'.find_files{}<cr>
 nnoremap <Leader>pb :lua require'telescope.builtin'.buffers{}<cr>
 nnoremap <Leader>pg :lua require'telescope.builtin'.git_files{}<cr>
+nnoremap <C-p> :Telescope git_files<cr>
 nnoremap <Leader>ps :lua require'telescope.builtin'.grep_string{}<cr>
 nnoremap <Leader>pl :lua require'telescope.builtin'.live_grep{}<cr>
 
@@ -375,12 +376,12 @@ let g:markdown_enable_spell_checking = 0
 " ==================== tabular  ===========================
 
 if exists(":Tabularize")
-  nmap <leader>a= :Tabularize /=<CR>
-  vmap <leader>a= :Tabularize /=<CR>
-  nmap <leader>a: :Tabularize /:\zs<CR>
-  vmap <leader>a: :Tabularize /:\zs<CR>
-  nmap <leader>a\| :Tabularize /\|<CR>
-  vmap <leader>a\| :Tabularize /\|<CR>
+nmap <leader>a= :Tabularize /=<CR>
+vmap <leader>a= :Tabularize /=<CR>
+nmap <leader>a: :Tabularize /:\zs<CR>
+vmap <leader>a: :Tabularize /:\zs<CR>
+nmap <leader>a\| :Tabularize /\|<CR>
+vmap <leader>a\| :Tabularize /\|<CR>
 endif
 
 
@@ -453,7 +454,7 @@ nmap <silent> gr <Plug>(coc-references)
 nmap <silent> gu <Plug>(coc-references)
 nmap <leader><F2> <Plug>(coc-rename)
 nmap <silent> ]d :call CocAction('diagnosticNext')<cr>
-nmap <silent> [d :call CocAction('diagnosticPrev')<cr>
+nmap <silent> [d :call CocAction('diagnosticPrevious')<cr>
 " xmap <leader>r  <Plug>(coc-format-selected)
 vmap <leader>r  <Plug>(coc-format-selected)
 nmap <leader>rc  :call CocAction('format')<cr>
@@ -474,8 +475,8 @@ map <leader>o :OR<CR>
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~ '\s'
+let col = col('.') - 1
+return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
 " inoremap <silent><expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -597,6 +598,21 @@ vnoremap <leader>vd y:let @"=system('base64 --decode', @")<cr>gvP
 
 " TERMINAL
 :tnoremap <Esc> <C-\><C-n>
+
+" scratch
+function! Scratch()
+    split
+    noswapfile hide enew
+    setlocal buftype=nofile
+    setlocal bufhidden=hide
+    "setlocal nobuflisted
+    "lcd ~
+    file scratch
+endfunction
+command Scratch :call Scratch()
+
+
+command Exec set splitright | vnew | set filetype=sh buftype=nofile| read !sh #
 
 " colorscheme
 "colorscheme dracula
