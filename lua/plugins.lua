@@ -1,3 +1,4 @@
+# packer.nvim
 vim.cmd [[packadd packer.nvim]]
 
 return require('packer').startup(function(use)
@@ -5,6 +6,8 @@ return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
 
   use {'dracula/vim', as = 'dracula'}
+
+  use { 'ctrlpvim/ctrlp.vim' }
 
   use {
     'pwntester/octo.nvim',
@@ -20,4 +23,5 @@ return require('packer').startup(function(use)
 
   use { "folke/tokyonight.nvim", as = 'tokyonight' }
   use { "catppuccin/nvim", as = "catppuccin" }
+
 end)
