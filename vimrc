@@ -228,6 +228,8 @@ autocmd FileType help wincmd L
 " Set tabstop etc for java
 "autocmd FileType java setlocal ts=4 sw=4 sts=4
 autocmd FileType xml setlocal tabstop=4 shiftwidth=4 softtabstop=4
+au BufRead,BufNewFile *.http set filetype=sh
+
 
 if has("autocmd")
   au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -380,9 +382,18 @@ nmap <leader>a= :Tabularize /=<CR>
 vmap <leader>a= :Tabularize /=<CR>
 nmap <leader>a: :Tabularize /:\zs<CR>
 vmap <leader>a: :Tabularize /:\zs<CR>
-nmap <leader>a\| :Tabularize /\|<CR>
-vmap <leader>a\| :Tabularize /\|<CR>
+nmap <leader>a<Bar> :Tabularize /|/l1<CR>
+vmap <leader>a<Bar> :call <SID>visualAlign()<CR>
+source ~/.config/nvim/tab-tpope.vim
 endif
+
+vnoremap <leader>md :'<,'>!prettier --parser markdown<cr>
+nnoremap <leader>md vip:'<,'>!prettier --parser markdown<cr>
+vnoremap <leader>js :'<,'>!prettier --parser json<cr>
+
+function! s:visualAlign()
+  Tabularize /|/l1
+endfunction
 
 
 " Go to column 80
@@ -620,3 +631,4 @@ command Exec set splitright | vnew | set filetype=sh buftype=nofile| read !sh #
 colorscheme catppuccin-mocha
 highlight CursorLine ctermbg=016 cterm=NONE
 hi Normal guibg=NONE ctermbg=NONE
+

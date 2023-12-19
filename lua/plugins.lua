@@ -24,4 +24,6 @@ return require('packer').startup(function(use)
   use { "folke/tokyonight.nvim", as = 'tokyonight' }
   use { "catppuccin/nvim", as = "catppuccin" }
 
+  use { "github/copilot.vim", as = 'copilot' }
+
 end)
