@@ -4,19 +4,19 @@ call plug#begin()
 
 Plug 'mileszs/ack.vim'
 Plug 'lokikl/vim-ctrlp-ag'
-"Plug 'ctrlpvim/ctrlp.vim'                       " use ctrl p to open files
-
+""Plug 'ctrlpvim/ctrlp.vim'                       " use ctrl p to open files
+"
 Plug 'frazrepo/vim-rainbow'                     " rainbow brackets
 Plug 'scrooloose/nerdtree'                      " looking at files in folders / trees
 Plug 'Xuyuanp/nerdtree-git-plugin'              " show git status in nerdtree
 Plug 'neomake/neomake'                          " automatic make / lint
 Plug 'editorconfig/editorconfig-vim'            " use the project editor settings
 Plug 'pangloss/vim-javascript'                  " support for javascript
-" post install (yarn install | npm install) then load plugin only for editing supported files
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+"" post install (yarn install | npm install) then load plugin only for editing supported files
+"" Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'ternjs/tern_for_vim'                      " go to defintion etc
 Plug 'itspriddle/vim-shellcheck'                " shellcheck
-                                                " Plug 'b4b4r07/vim-sqlfmt'                                      " format sql
+"                                                " Plug 'b4b4r07/vim-sqlfmt'                                      " format sql
 Plug 'Yggdroot/indentLine'                      " show indents
 Plug 'godlygeek/tabular'                        " tab things up
 Plug 'gabrielelana/vim-markdown'                " markdown, depends on tabular
@@ -31,40 +31,40 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-commentary'                     " gcc to comment line
 Plug 'tpope/vim-surround'                       " ys, cs, ds, S
 Plug 'tpope/vim-unimpaired'
-" Plug 'junegunn/gv.vim'                                         " git Graph
-" Plug 'AGhost-7/critiq.vim'                                     " PR viewer
+"" Plug 'junegunn/gv.vim'                                         " git Graph
+"" Plug 'AGhost-7/critiq.vim'                                     " PR viewer
 Plug 'airblade/vim-gitgutter'                   " show git gutter
-Plug 'whiteinge/diffconflicts'                  " better git diff conflicts
-Plug 'elzr/vim-json'                            " vim syntax
-" Plug 'terryma/vim-multiple-cursors'                            " multiple cursors for multine line select etc
-Plug 'mhinz/vim-sayonara'                       " keep stuff nice
-Plug 'stephpy/vim-yaml'                         " faster yaml
+"Plug 'whiteinge/diffconflicts'                  " better git diff conflicts
+"Plug 'elzr/vim-json'                            " vim syntax
+"" Plug 'terryma/vim-multiple-cursors'                            " multiple cursors for multine line select etc
+"Plug 'mhinz/vim-sayonara'                       " keep stuff nice
+"Plug 'stephpy/vim-yaml'                         " faster yaml
 Plug 'Raimondi/delimitMate'                     " match '{[ etc
 Plug 'janko/vim-test'                           " run tests
-"Plug 'derekwyatt/vim-scala'
-"Plug 'eed3si9n/LanguageClient-neovim'
+""Plug 'derekwyatt/vim-scala'
+""Plug 'eed3si9n/LanguageClient-neovim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'} " Completer, support for language server
 Plug 'ryanoasis/vim-devicons'                   " icon support for different plugins using patched nerd font
 Plug 'vim-airline/vim-airline'                  " Airline
 Plug 'vim-airline/vim-airline-themes'           " and theme
-Plug 'chrisbra/csv.vim'                         " csv filetype plugin
-"Plug 'alvan/vim-closetag'                       " html close tags
-"Plug 'mattn/emmet-vim'                          " enclose in tags
-" typescript
+"Plug 'chrisbra/csv.vim'                         " csv filetype plugin
+""Plug 'alvan/vim-closetag'                       " html close tags
+""Plug 'mattn/emmet-vim'                          " enclose in tags
+"" typescript
 Plug 'leafgarland/typescript-vim'               " provides syntax highlighting
-Plug 'maxmellon/vim-jsx-pretty'                 " support for jsx highlighting
-Plug 'jparise/vim-graphql'                      " GraphQL syntax
-Plug 'puremourning/vimspector'
-
-" formatting
-" Add maktaba and codefmt to the runtimepath.
-" (The latter must be installed before it can be used.)
+"Plug 'maxmellon/vim-jsx-pretty'                 " support for jsx highlighting
+"Plug 'jparise/vim-graphql'                      " GraphQL syntax
+"Plug 'puremourning/vimspector'
+"
+"" formatting
+"" Add maktaba and codefmt to the runtimepath.
+"" (The latter must be installed before it can be used.)
 Plug 'google/vim-maktaba'
 Plug 'google/vim-codefmt'
-" Also add Glaive, which is used to configure codefmt's maktaba flags. See
-" `:help :Glaive` for usage.
+"" Also add Glaive, which is used to configure codefmt's maktaba flags. See
+"" `:help :Glaive` for usage.
 Plug 'google/vim-glaive'
-
+"
 " Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 " colorschemes
 " Plug 'flazz/vim-colorschemes'
@@ -374,6 +374,7 @@ let g:vim_json_syntax_conceal = 0
 
 let g:vim_markdown_conceal = 0
 let g:markdown_enable_spell_checking = 0
+let g:markdown_enable_insert_mode_mappings = 0
 
 " ==================== tabular  ===========================
 
@@ -411,7 +412,6 @@ call neomake#configure#automake('nw', 1000)
 " for vim-scala
 au BufRead,BufNewFile *.sbt set filetype=scala
 let g:scala_sort_across_groups=1
-let g:scala_first_party_namespaces='com.speedledger'
 
 " open the list automatically
 " let g:neomake_open_list = 2
